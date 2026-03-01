@@ -4,9 +4,8 @@
 
 {{ login }} さん、こんにちは！
 
-Monaです。演習の準備ができました。Issueに沿って、ひとつずつ進めていきましょう。💚
+Monaです。演習の準備ができました。Issueに沿って、ひとつずつ進めていきましょう💚
 
-自分のペースで進めて大丈夫です。途中で休憩しても問題ありません。☕
 
 [![](https://img.shields.io/badge/%E6%BC%94%E7%BF%92%E3%82%92%E9%96%8B%E3%81%8F-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)]({{ issue_url }})
 

@@ -14,7 +14,7 @@ GitHub Skills ハンズオン演習を完了しました 🎉
 
 <img src="https://octodex.github.com/images/welcometocat.png" height="200px" />
 
-### 🌟 演習を無事に完了しました！ 🌟
+### 🌟 演習を無事に完了しました 🌟
 
 このリポジトリの操作手順を一通り体験できました。
 
