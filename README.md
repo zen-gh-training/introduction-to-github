@@ -26,7 +26,7 @@ _1時間以内にGitHubを使い始めましょう。_
 [![](https://img.shields.io/badge/%E6%BC%94%E7%BF%92%E3%82%92%E3%82%B3%E3%83%94%E3%83%BC-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=zen-gh-training&template_name=introduction-to-github&owner=%40me&name=introduction-to-github&description=%E6%BC%94%E7%BF%92%3A+GitHub+%E5%85%A5%E9%96%80&visibility=public)
 
 <details>
-<summary>困ったときは ���</summary><br/>
+<summary>困ったときは</summary><br/>
 
 演習をコピーする際は、以下の設定をおすすめします：
 
@@ -38,7 +38,7 @@ _1時間以内にGitHubを使い始めましょう。_
 
 - ジョブが実行中かどうか確認してください。単に少し時間がかかっているだけの場合があります。
 
-- ページに失敗したジョブが表示されている場合は、Issueを提出してください。バグを見つけましたね！ ���
+- ページに失敗したジョブが表示されている場合は、Issueを提出してください。バグを見つけましたね！ 🎉
 
 </details>
 

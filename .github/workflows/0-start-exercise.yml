@@ -12,6 +12,9 @@ permissions:
 
 env:
   STEP_1_FILE: ".github/steps/1-create-a-branch.md"
+  EXERCISE_TITLE: "GitHub 入門"
+  ISSUE_TITLE_PREFIX: "演習: "
+  INTRO_MESSAGE: "GitHubが初めての方は、開発者仲間が ___**Issue**___ を使って作業を整理し、コラボレーションしていることに気づくでしょう。私たちも同じようにやります！それはまた別のレッスンですが、今日はGitHubの基本を紹介します。"
 
 jobs:
   start_exercise:
@@ -21,12 +24,79 @@ jobs:
     uses: skills/exercise-toolkit/.github/workflows/start-exercise.yml@v0.8.1
     with:
       exercise-title: "GitHub 入門"
+      issue-title-prefix: "演習: "
       intro-message: "GitHubが初めての方は、開発者仲間が ___**Issue**___ を使って作業を整理し、コラボレーションしていることに気づくでしょう。私たちも同じようにやります！それはまた別のレッスンですが、今日はGitHubの基本を紹介します。"
+
+  localize_start_content:
+    name: 開始メッセージとREADMEを日本語化
+    runs-on: ubuntu-latest
+    needs: [start_exercise]
+    env:
+      ISSUE_NUMBER: ${{ needs.start_exercise.outputs.issue-number }}
+      ISSUE_URL: ${{ needs.start_exercise.outputs.issue-url }}
+
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Issue本文を日本語テンプレートで生成
+        id: build-japanese-issue-body
+        uses: skills/action-text-variables@v3
+        with:
+          template-file: .github/step-feedback/exercise-welcome.md
+          template-vars: |
+            title: ${{ env.EXERCISE_TITLE }}
+            login: ${{ github.actor }}
+            intro_message: ${{ env.INTRO_MESSAGE }}
+            bug_report_url: ""
+
+      - name: Issue本文を更新
+        uses: actions/github-script@v8
+        env:
+          ISSUE_BODY: ${{ steps.build-japanese-issue-body.outputs.updated-text }}
+        with:
+          script: |
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: Number(process.env.ISSUE_NUMBER),
+              body: process.env.ISSUE_BODY
+            });
+
+      - name: READMEを日本語テンプレートで生成
+        id: build-japanese-readme
+        uses: skills/action-text-variables@v3
+        with:
+          template-file: .github/readme/exercise-started.md
+          template-vars: |
+            title: ${{ env.EXERCISE_TITLE }}
+            login: ${{ github.actor }}
+            issue_url: ${{ env.ISSUE_URL }}
+
+      - name: READMEを上書き
+        env:
+          README_TEXT: ${{ steps.build-japanese-readme.outputs.updated-text }}
+        run: echo "$README_TEXT" > README.md
+
+      - name: README更新をコミット
+        run: |
+          if git diff --quiet README.md; then
+            echo "READMEに変更はありません。"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "READMEを日本語版に更新"
+          git push
 
   post_next_step_content:
     name: 次のステップの内容を投稿
     runs-on: ubuntu-latest
-    needs: [start_exercise]
+    needs: [start_exercise, localize_start_content]
     env:
       ISSUE_REPOSITORY: ${{ github.repository }}
       ISSUE_NUMBER: ${{ needs.start_exercise.outputs.issue-number }}

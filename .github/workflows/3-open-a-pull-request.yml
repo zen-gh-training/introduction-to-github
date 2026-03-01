@@ -30,6 +30,8 @@ jobs:
       github.head_ref == 'my-first-branch'
     name: 演習のIssueを検索
     uses: skills/exercise-toolkit/.github/workflows/find-exercise-issue.yml@v0.7.0
+    with:
+      issue-title-text: "演習: "
 
   check_step_work:
     name: ステップの作業を確認

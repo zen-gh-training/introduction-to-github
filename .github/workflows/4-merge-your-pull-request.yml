@@ -23,6 +23,8 @@ jobs:
   find_exercise:
     name: 演習のIssueを検索
     uses: skills/exercise-toolkit/.github/workflows/find-exercise-issue.yml@v0.5.0
+    with:
+      issue-title-text: "演習: "
 
   post_review_content:
     name: レビュー内容を投稿
@@ -60,7 +62,58 @@ jobs:
   finish_exercise:
     name: 演習を完了
     needs: [find_exercise, post_review_content]
-    uses: skills/exercise-toolkit/.github/workflows/finish-exercise.yml@v0.7.0
-    with:
-      issue-url: ${{ needs.find_exercise.outputs.issue-url }}
-      exercise-title: "GitHub 入門"
+    runs-on: ubuntu-latest
+    env:
+      ISSUE_REPOSITORY: ${{ github.repository }}
+      ISSUE_NUMBER: ${{ needs.find_exercise.outputs.issue-number }}
+      ISSUE_URL: ${{ needs.find_exercise.outputs.issue-url }}
+
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: READMEを日本語テンプレートで生成
+        id: build-finished-readme
+        uses: skills/action-text-variables@v3
+        with:
+          template-file: .github/readme/exercise-finished.md
+          template-vars: |
+            login: ${{ github.actor }}
+            issue_url: ${{ env.ISSUE_URL }}
+            exercise_title: GitHub 入門
+            repository_url: https://github.com/${{ github.repository }}
+
+      - name: READMEを上書き
+        env:
+          README_TEXT: ${{ steps.build-finished-readme.outputs.updated-text }}
+        run: echo "$README_TEXT" > README.md
+
+      - name: README更新をコミット
+        run: |
+          if git diff --quiet README.md; then
+            echo "READMEに変更はありません。"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "演習完了: READMEを日本語版に更新"
+          git push
+
+      - name: コメントを作成 - 演習完了
+        uses: GrantBirki/comment@v2.1.1
+        with:
+          repository: ${{ env.ISSUE_REPOSITORY }}
+          issue-number: ${{ env.ISSUE_NUMBER }}
+          file: .github/step-feedback/exercise-finished.md
+          vars: |
+            login: ${{ github.actor }}
+            repo_full_name: ${{ github.repository }}
+
+      - name: Issueをクローズ
+        run: gh issue close "${{ env.ISSUE_URL }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
