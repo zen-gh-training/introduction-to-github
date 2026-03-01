@@ -1,4 +1,4 @@
-name: Step 0 # Start Exercise
+name: Step 0 # 演習を開始
 
 on:
   push:
@@ -6,9 +6,9 @@ on:
       - main
 
 permissions:
-  contents: write # Update Readme
-  actions: write # Disable/enable workflows
-  issues: write # Create issue and comment on issues
+  contents: write # READMEを更新
+  actions: write # ワークフローの有効化/無効化
+  issues: write # Issueの作成とコメント
 
 env:
   STEP_1_FILE: ".github/steps/1-create-a-branch.md"
@@ -17,14 +17,14 @@ jobs:
   start_exercise:
     if: |
       !github.event.repository.is_template
-    name: Start Exercise
+    name: 演習を開始
     uses: skills/exercise-toolkit/.github/workflows/start-exercise.yml@v0.8.1
     with:
-      exercise-title: "Introduction to GitHub"
-      intro-message: "If you are new to GitHub, you might find your fellow developers use ___**issues**___  to organize their work and collaborate. We will do the same! That's another lesson, but today, we will introduce you to the basics."
+      exercise-title: "GitHub 入門"
+      intro-message: "GitHubが初めての方は、開発者仲間が ___**Issue**___ を使って作業を整理し、コラボレーションしていることに気づくでしょう。私たちも同じようにやります！それはまた別のレッスンですが、今日はGitHubの基本を紹介します。"
 
   post_next_step_content:
-    name: Post next step content
+    name: 次のステップの内容を投稿
     runs-on: ubuntu-latest
     needs: [start_exercise]
     env:
@@ -32,33 +32,26 @@ jobs:
       ISSUE_NUMBER: ${{ needs.start_exercise.outputs.issue-number }}
 
     steps:
-      - name: Checkout
+      - name: チェックアウト
         uses: actions/checkout@v4
         with:
           ref: main
 
-      - name: Get response templates
-        uses: actions/checkout@v4
-        with:
-          repository: skills/exercise-toolkit
-          path: exercise-toolkit
-          ref: v0.7.0
-
-      - name: Create comment - add step content
+      - name: コメントを作成 - ステップ内容を追加
         uses: GrantBirki/comment@v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
           file: ${{ env.STEP_1_FILE }}
 
-      - name: Create comment - watching for progress
+      - name: コメントを作成 - 進捗を監視中
         uses: GrantBirki/comment@v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
-          file: exercise-toolkit/markdown-templates/step-feedback/watching-for-progress.md
+          file: .github/step-feedback/watching-for-progress.md
 
-      - name: Disable current workflow and enable next one
+      - name: 現在のワークフローを無効化し、次を有効化
         run: |
           gh workflow enable "Step 1"
         env:

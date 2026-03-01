@@ -1,46 +1,46 @@
-## Step 3: Open a pull request
+## ステップ 3: プルリクエストを開く
 
-_Nice work making that commit! :sparkles:_
+_コミットお見事です！ :sparkles:_
 
-Now that you have made a change to the project and created a commit, it’s time to share your proposed change through a pull request!
+プロジェクトに変更を加えてコミットを作成しました。次は、プルリクエストを通じて提案した変更を共有しましょう！
 
-**What is a pull request?**: Collaboration happens on a _[pull request](https://docs.github.com/en/get-started/quickstart/github-glossary#pull-request)_. The pull request shows the changes in your branch to other people and allows people to accept, reject, or suggest additional changes to your branch. In a side by side comparison, this pull request is going to keep the changes you just made on your branch and propose applying them to the `main` project branch. For more information about pull requests, see "[About pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)".
+**プルリクエストとは？**: コラボレーションは _[プルリクエスト](https://docs.github.com/ja/get-started/quickstart/github-glossary#pull-request)_ で行われます。プルリクエストは、あなたのブランチの変更を他の人に見せ、変更の承認、却下、または追加の変更提案を可能にします。並べて比較すると、このプルリクエストはあなたがブランチで行った変更をそのまま保持し、それを `main` プロジェクトブランチに適用することを提案します。プルリクエストについて詳しくは、「[プルリクエストについて](https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)」をご覧ください。
 
-### :keyboard: Activity: Create a pull request
+### :keyboard: アクティビティ: プルリクエストを作成する
 
-You may have noticed after your commit that a message displayed indicating your recent push to your branch and providing a button that says **Compare & pull request**.
+コミット後に、ブランチへの最近のプッシュを示すメッセージと **Compare & pull request** ボタンが表示されたことに気づいたかもしれません。
 
-![screenshot of message and button](../images/compare-pull-request-button.png)
+![メッセージとボタンのスクリーンショット](../images/compare-pull-request-button.png)
 
-To create a pull request automatically, click **Compare & pull request** button, and then skip to step 5 below. Alternately, you practice creating it manually using the first 4 steps.
+プルリクエストを自動的に作成するには、**Compare & pull request** ボタンをクリックし、以下のステップ5に進んでください。または、以下の最初の4つのステップで手動で作成する練習もできます。
 
-1. In the header menu of your repository, click the **Pull requests** tab .
-2. Click the **New pull request** button.
-3. Select the following branches using the dropdown menus.
+1. リポジトリのヘッダーメニューで、**Pull requests** タブをクリックします。
+2. **New pull request** ボタンをクリックします。
+3. ドロップダウンメニューを使って以下のブランチを選択します。
    
    - **base:** `main`
    - **compare:** `my-first-branch`
 
-   ![screenshot showing both branch selections](../images/branch-selection-comparison.png)
+   ![両方のブランチ選択を示すスクリーンショット](../images/branch-selection-comparison.png)
 
-4. Click **Create pull request**.
+4. **Create pull request** をクリックします。
 
-5. Enter a title for your pull request. By default, the title will automatically be the name of your branch. For this exercise, let's edit the field to say `Add my first file`.
+5. プルリクエストのタイトルを入力します。デフォルトでは、タイトルは自動的にブランチ名になります。この演習では、フィールドを `Add my first file` に編集しましょう。
 
-6. The next field helps you provide a **description** of the changes you made. Please enter a short description of what you’ve accomplished so far. As a reminder, you have: created a new branch, created a file, and made a commit.
+6. 次のフィールドでは、行った変更の **説明** を入力できます。これまでに達成したことの簡単な説明を入力してください。おさらいすると、新しいブランチを作成し、ファイルを作成し、コミットを行いました。
 
-   ![screenshot showing pull request](../images/create-pull-request-form.png)
+   ![プルリクエストのスクリーンショット](../images/create-pull-request-form.png)
 
-7. Click **Create pull request**.
+7. **Create pull request** をクリックします。
 
-8. Now that you've started a place to collaborate, Mona should already be busy checking your work. Give her a moment and keep watch in the comments. You will see her respond with progress info and the next lesson.
+8. コラボレーションの場を作成したので、Monaはすでにあなたの作業を確認中のはずです。少し待って、コメント欄を注視してください。Monaが進捗情報と次のレッスンを返信します。
 
 
 <details>
-<summary>Having trouble? 🤷</summary><br/>
+<summary>困ったときは ���</summary><br/>
 
-If you don't get feedback, here are some things to check:
-- Make sure your pull request title is correct.
-- Ensure your pull request has a description.
+フィードバックが届かない場合は、以下を確認してください：
+- プルリクエストのタイトルが正しいことを確認してください。
+- プルリクエストに説明が入力されていることを確認してください。
 
 </details>

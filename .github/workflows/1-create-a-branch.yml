@@ -1,9 +1,9 @@
-name: Step 1 # Create a branch
+name: Step 1 # ブランチを作成する
 
-# Checks if the learner completed tasks for step 1.
-# - Triggers when the user creates a new branch 'my-first-branch'.
-# - Checks that the branch name is 'my-first-branch'.
-# - If all checks pass, the workflow is disabled so it doesn't run again. As such, workflow status badge will change to green.
+# 学習者がステップ1のタスクを完了したか確認します。
+# - ユーザーが新しいブランチ 'my-first-branch' を作成したときにトリガーされます。
+# - ブランチ名が 'my-first-branch' であることを確認します。
+# - すべてのチェックに合格すると、再実行されないようにワークフローが無効化されます。その結果、ワークフローのステータスバッジが緑色に変わります。
 
 on:
   push:
@@ -20,11 +20,11 @@ env:
 
 jobs:
   find_exercise:
-    name: Find Exercise Issue
+    name: 演習のIssueを検索
     uses: skills/exercise-toolkit/.github/workflows/find-exercise-issue.yml@v0.7.0
 
   post_next_step_content:
-    name: Post next step content
+    name: 次のステップの内容を投稿
     needs: [find_exercise]
     runs-on: ubuntu-latest
     env:
@@ -32,40 +32,33 @@ jobs:
       ISSUE_NUMBER: ${{ needs.find_exercise.outputs.issue-number }}
 
     steps:
-      - name: Checkout
+      - name: チェックアウト
         uses: actions/checkout@v4
 
-      - name: Get response templates
-        uses: actions/checkout@v4
-        with:
-          repository: skills/exercise-toolkit
-          path: exercise-toolkit
-          ref: v0.7.0
-
-      - name: Create comment - step finished
+      - name: コメントを作成 - ステップ完了
         uses: GrantBirki/comment@v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
-          file: exercise-toolkit/markdown-templates/step-feedback/step-finished-prepare-next-step.md
+          file: .github/step-feedback/step-finished-prepare-next-step.md
           vars: |
             next_step_number: 2
 
-      - name: Create comment - add step content
+      - name: コメントを作成 - ステップ内容を追加
         uses: GrantBirki/comment@v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
           file: ${{ env.STEP_2_FILE }}
 
-      - name: Create comment - watching for progress
+      - name: コメントを作成 - 進捗を監視中
         uses: GrantBirki/comment@v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
-          file: exercise-toolkit/markdown-templates/step-feedback/watching-for-progress.md
+          file: .github/step-feedback/watching-for-progress.md
 
-      - name: Disable current workflow and enable next one
+      - name: 現在のワークフローを無効化し、次を有効化
         run: |
           gh workflow disable "${{github.workflow}}"
           gh workflow enable "Step 2"
